@@ -133,4 +133,16 @@
     newLeft = [result arrayByAddingObjectsFromArray:newLeft];
     return [newLeft arrayByAddingObjectsFromArray:newRight];
 }
+
+
+#pragma mark -- 遍历二叉树
+//遍历二叉树有四种方法，现在写最基本的三种，循环、递归、层次遍历（类似广度优先搜索）、深度遍历
+//遍历二叉树又分成前序、中序、后序，这里的前中后最主要的区别在于根节点所在的位置来定义
+
+/**忽然发现利用OC来构建二叉树实在是太费劲了，如果想要用Objective-c 来构建二叉树可以尝试看看这个地址https://github.com/agnosticdev/Tutorials/tree/master/HowToCreateABinaryTreeInObjectiveC
+ */
+
+// 我觉得还是使用C++ 比较好，如果你没有C++的基础也没有关系，我觉得这里只会用到简单的C++语法，并不会再放在
+
+
 @end
