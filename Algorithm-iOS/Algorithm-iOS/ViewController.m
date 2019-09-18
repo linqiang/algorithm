@@ -19,7 +19,8 @@
     // Do any additional setup after loading the view.
     NSMutableArray *muArr = [NSMutableArray arrayWithObjects:@(2),@(5),@(1),@(12),@(8), nil];
 //    [self buddleSort:muArr]; 冒泡排序
-    [self quickSort:muArr];
+//    [self quickSort:muArr];//快速排序
+    [self mergeSort:muArr]; //归并排序
 }
 
 #pragma mark -- buddle Sort
@@ -90,5 +91,46 @@
     [sortedArray addObject:pivotValue];
     [sortedArray addObjectsFromArray:[self quickSort:greaterArray]];
     return sortedArray;
+}
+
+
+#pragma mark -- 归并排序
+-(NSArray *)mergeSort:(NSArray *)unsortedArray
+{
+    if ([unsortedArray count] < 2)
+    {
+        return unsortedArray;
+    }
+    long middle = ([unsortedArray count]/2);
+    NSRange left = NSMakeRange(0, middle);
+    NSRange right = NSMakeRange(middle, ([unsortedArray count] - middle));
+    NSArray *rightArr = [unsortedArray subarrayWithRange:right];
+    NSArray *leftArr = [unsortedArray subarrayWithRange:left];
+    NSArray *resultArray =[self merge:[self mergeSort:leftArr] andRight:[self mergeSort:rightArr]];
+    return resultArray;
+}
+
+-(NSArray *)merge:(NSArray *)leftArr andRight:(NSArray *)rightArr
+{
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    int right = 0;
+    int left = 0;
+    while (left < [leftArr count] && right < [rightArr count])
+    {
+        if ([[leftArr objectAtIndex:left] intValue] < [[rightArr objectAtIndex:right] intValue])
+        {
+            [result addObject:[leftArr objectAtIndex:left++]];
+        }
+        else
+        {
+            [result addObject:[rightArr objectAtIndex:right++]];
+        }
+    }
+    NSRange leftRange = NSMakeRange(left, ([leftArr count] - left));
+    NSRange rightRange = NSMakeRange(right, ([rightArr count] - right));
+    NSArray *newRight = [rightArr subarrayWithRange:rightRange];
+    NSArray *newLeft = [leftArr subarrayWithRange:leftRange];
+    newLeft = [result arrayByAddingObjectsFromArray:newLeft];
+    return [newLeft arrayByAddingObjectsFromArray:newRight];
 }
 @end
